@@ -1,0 +1,39 @@
+header {
+    background-color: rgb(159, 159, 159);
+    padding: 2em;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.header-geral{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+#header-avatar{
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    width: 14em;
+    
+    a {
+        text-decoration: none;
+        color:black;
+    }
+    button{
+        height: 5em;
+        width: 5em;
+        border-radius: 50%;
+        aspect-ratio: 1/1;
+    }
+}
+section{
+    width: 80%;
+    justify-content: left;
+    align-items: center;
+    flex-direction: column;
+    margin: 1em;
+    padding: 0.8em;
+    border-radius: 0.2em;
+    background-color: rgb(192, 192, 192);
+}
