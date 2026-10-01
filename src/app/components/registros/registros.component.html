@@ -17,7 +17,11 @@
 </header>
 <main> 
     <h2 id="titulo">Registros</h2>
-    <app-card-registros></app-card-registros>
+        <!--                                 registroOrigem       -->
+    <div id="registros-container" *ngFor="let registro of registros">
+        <!--           registroDestino = registroOrigem -->
+        <app-card-registros [registro] = "registro"></app-card-registros>
+    </div>
     <button id="adicionar-registro">
         <span>+</span>
     </button>
