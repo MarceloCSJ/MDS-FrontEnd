@@ -15,6 +15,6 @@ export class CardRegistrosComponent {
   registro: Registro = {
     titulo: '',
     conteudo: '',
-    data: new Date('2020-01-01'),
+    dataPagina: new Date('2020-01-01'),
   };
 }

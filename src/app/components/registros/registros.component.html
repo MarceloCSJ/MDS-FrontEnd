@@ -22,7 +22,27 @@
         <!--           registroDestino = registroOrigem -->
         <app-card-registros [registro] = "registro"></app-card-registros>
     </div>
-    <button id="adicionar-registro">
+    <button id="adicionar-registro" (click)="modalSolicitado = true">
         <span>+</span>
     </button>
 </main>
+
+@if (modalSolicitado) {
+    <div id="modal-container">
+        <section id="modal">
+            <div id="modal-header">
+                <h2>Adicionar Registro</h2>
+                <button id="modal-fechar" (click)="modalSolicitado = false">X</button>
+            </div>
+            <form id="modal-form">
+                <label for="titulo">Título:</label>
+                <input type="text" id="titulo" name="titulo" required>
+
+                <label for="conteudo">Conteúdo:</label>
+                <textarea id="conteudo" name="conteudo" required></textarea>
+
+                <button type="submit">Salvar</button>
+            </form>
+        </section>
+    </div>
+}

@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { CardRegistrosComponent } from './card-registros/card-registros.component';
 import { Registro } from './card-registros/Registro';
 import { NgFor } from '@angular/common';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-registros',
@@ -18,31 +19,32 @@ export class RegistrosComponent {
   //   data: new Date('2024-01-01'),
   // };
 //como é um array, deve ser no plural
-  registros: Registro[] = [
-    {
-      titulo: 'Primeiro registro aqui',
-      conteudo: 'Este é o conteúdo do primeiro registro',
-      data: new Date('2026-09-10'),
-    },
-    {
-      titulo: 'Segundo registro aqui',
-      conteudo: 'Este é o conteúdo do segundo registro',
-      data: new Date('2026-09-11'),
-    },
-    {
-      titulo: 'Terceiro registro aqui',
-      conteudo: 'Este é o conteúdo do terceiro registro',
-      data: new Date('2026-10-01'),
-    },
-    {
-      titulo: 'Quarto registro aqui',
-      conteudo: 'Este é o conteúdo do quarto registro',
-      data: new Date('2026-10-02'),
-    },
-    {
-      titulo: 'Quinto registro aqui',
-      conteudo: 'Este é o conteúdo do quinto registro',
-      data: new Date('2026-10-04'),
-    },
-  ]
+  registros: Registro[] = []
+  modalSolicitado: boolean = false;
+
+  // o _http está com o _ por ser uma variável privada e ficar mais explícito desta forma.
+  constructor(private _http: HttpClient) {
+    //essa é uma estrutura de injeção de dependência.
+  }
+
+  ngOnInit() : void{
+    //                          http://localhost:5029/registros
+    this._http.get<Registro[]>('http://localhost:4200/api/registros',
+      {
+        transferCache: false
+      }
+    )
+    .subscribe({
+      next: (registros) => {
+        this.registros = registros;
+      },
+      error: (error) => {
+        console.error('Erro ao obter os registros: ', error);
+      }
+    });
+  }
+
+  adicionarRegistro() {
+    this.modalSolicitado = false;
+  }
 }
