@@ -4,8 +4,8 @@
         <h2>SENAC</h2>
     </div>
     <div class="header-geral">
-        <p>Registre seus pensamentos</p>
-        <p>e anotações</p>
+        <p class="paragrafo-header">Registre seus pensamentos</p>
+        <p class="paragrafo-header">e anotações</p>
     </div>
     <div id="header-avatar">
         <button id="avatar-clicavel"></button>
@@ -34,12 +34,12 @@
                 <h2>Adicionar Registro</h2>
                 <button id="modal-fechar" (click)="modalSolicitado = false">X</button>
             </div>
-            <form id="modal-form">
+            <form id="modal-form" (ngSubmit)="adicionarRegistro()">
                 <label for="titulo">Título:</label>
-                <input type="text" id="titulo" name="titulo" required>
+                <input type="text" id="titulo" name="titulo" required [(ngModel)]="novoRegistro.titulo">
 
                 <label for="conteudo">Conteúdo:</label>
-                <textarea id="conteudo" name="conteudo" required></textarea>
+                <textarea id="conteudo" name="conteudo" required [(ngModel)]="novoRegistro.conteudo"></textarea>
 
                 <button type="submit">Salvar</button>
             </form>

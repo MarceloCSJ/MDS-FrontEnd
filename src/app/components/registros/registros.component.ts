@@ -3,11 +3,12 @@ import { CardRegistrosComponent } from './card-registros/card-registros.componen
 import { Registro } from './card-registros/Registro';
 import { NgFor } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
+import {FormsModule} from '@angular/forms';
 
 @Component({
   selector: 'app-registros',
   standalone: true,
-  imports: [CardRegistrosComponent, NgFor],
+  imports: [CardRegistrosComponent, NgFor, FormsModule],
   templateUrl: './registros.component.html',
   styleUrl: './registros.component.css'
 })
@@ -21,6 +22,11 @@ export class RegistrosComponent {
 //como é um array, deve ser no plural
   registros: Registro[] = []
   modalSolicitado: boolean = false;
+  novoRegistro: Registro = {
+    titulo: "",
+    conteudo: "",
+    dataPagina: new Date()
+  };
 
   // o _http está com o _ por ser uma variável privada e ficar mais explícito desta forma.
   constructor(private _http: HttpClient) {
@@ -45,6 +51,15 @@ export class RegistrosComponent {
   }
 
   adicionarRegistro() {
-    this.modalSolicitado = false;
+    this._http.post<Registro>('http://localhost:4200/api/registros', 
+    {
+      ...this.novoRegistro,
+      "usuarioId": 1
+    }).subscribe({
+      next: (registro) => {
+        this.registros.push(registro);
+        this.modalSolicitado = false;
+      }
+    })
   }
 }
