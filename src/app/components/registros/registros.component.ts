@@ -4,6 +4,7 @@ import { Registro } from './card-registros/Registro';
 import { NgFor } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import {FormsModule} from '@angular/forms';
+import { AutenticacaoService } from '../../../services/autenticacao.service';
 
 @Component({
   selector: 'app-registros',
@@ -29,17 +30,18 @@ export class RegistrosComponent {
   };
 
   // o _http está com o _ por ser uma variável privada e ficar mais explícito desta forma.
-  constructor(private _http: HttpClient) {
+  constructor(private _http: HttpClient, private autenticacaoService: AutenticacaoService) {
     //essa é uma estrutura de injeção de dependência.
   }
 
   ngOnInit() : void{
+    const token = this.autenticacaoService.retornarToken();
     //                          http://localhost:5029/registros
-    this._http.get<Registro[]>('http://localhost:4200/api/registros',
-      {
-        transferCache: false
+    this._http.get<Registro[]>('http://localhost:4200/api/registros', {
+      headers: {
+        'Authorization': `Bearer ${token}`
       }
-    )
+    })
     .subscribe({
       next: (registros) => {
         this.registros = registros;
@@ -51,10 +53,14 @@ export class RegistrosComponent {
   }
 
   adicionarRegistro() {
-    this._http.post<Registro>('http://localhost:4200/api/registros', 
-    {
+    const token = this.autenticacaoService.retornarToken();
+    this._http.post<Registro>('http://localhost:4200/api/registros', {
       ...this.novoRegistro,
-      "usuarioId": 1
+      "usuarioId": 1,
+    }, {
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
     }).subscribe({
       next: (registro) => {
         this.registros.push(registro);

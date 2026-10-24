@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { LoginComponent } from './components/login/login.component';
 import { RegistrosComponent } from './components/registros/registros.component';
+import { AutenticacaoService } from '../services/autenticacao.service';
 
 @Component({
   selector: 'app-root',
@@ -12,4 +13,10 @@ import { RegistrosComponent } from './components/registros/registros.component';
 })
 export class AppComponent {
   title = 'MDS';
+
+  constructor(private autenticacaoService: AutenticacaoService) {}
+
+  estaAutenticado(): boolean {
+    return this.autenticacaoService.estaAutenticado();
+  }
 }
